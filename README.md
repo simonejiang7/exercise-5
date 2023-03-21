@@ -55,7 +55,7 @@ You can run the project directly in Visual Studio Code or from the command line 
 - For Task 1.2: `task1_2`
 - For Task 2: `task2`
 
-- In VSCode:  Click on the Gradle Side Bar elephant icon, and navigate to one of the Gradle tasks, e.g.: `GRADLE PROJECTS` > `exercise-4` > `Tasks` > `jacamo` > `task1_1`.
+- In VSCode:  Click on the Gradle Side Bar elephant icon, and navigate to one of the Gradle tasks, e.g.: `GRADLE PROJECTS` > `exercise-5` > `Tasks` > `jacamo` > `task1_1`.
 - MacOS and Linux: Use the command `./gradlew` to run one of the Gradle tasks, e.g.:
 ```shell
 ./gradlew task1_1
