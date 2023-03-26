@@ -14,7 +14,7 @@ maintain_illuminance :- target_illuminance(Target) & current_illuminance(Current
 /* Initial beliefs */
 
 // The agent believes that the target illuminance is 400 lux
-target_illuminance(400).
+target_illuminance(350).
 
 /* Initial goals */
 
@@ -41,11 +41,11 @@ target_illuminance(400).
     .print("Raising the blinds when it is sunny");
     raiseBlinds.
 
-// // task1.1: 3
-// @lower_blinds_with_weather_plan
-// +!manage_illuminance:  (-weather("sunny")) & blinds("raised") <-
-//     .print("Lowering the blinds when it is cloudy");
-//     lowerBlinds.
+// task1.1: 3
+@lower_blinds_with_weather_plan
++!manage_illuminance:  weather("cloudy") & blinds("raised") <-
+    .print("Lowering the blinds when it is cloudy");
+    lowerBlinds.
 
 /* 
  * Plan for reacting to the addition of the goal !manage_illuminance
