@@ -3,10 +3,11 @@
 /* Initial rules */
 
 // Inference rule for infering the belief requires_brightening if the target illuminance is higher than the current illuminance
-requires_brightening :- target_illuminance(Target) & current_illuminance(Current) & Target  > Current.
+requires_brightening :- target_illuminance(Target) & current_illuminance(Current) & Target > Current & (Target mod (Current+100)) == 0.
+// requires_brightening :- (target_illuminance(Target) & current_illuminance(Current) & Target > Current).
 
 // Inference rule for infering the belief requires_darkening if the target illuminance is lower than the current illuminance
-requires_darkening :- target_illuminance(Target) & current_illuminance(Current) & Target < Current.
+requires_darkening :- target_illuminance(Target) & current_illuminance(Current) & Target <= Current & (Target mod (Current+100)) == 0.
 
 // task1.1:1
 maintain_illuminance :- target_illuminance(Target) & current_illuminance(Current) & Target = Current.
@@ -14,7 +15,7 @@ maintain_illuminance :- target_illuminance(Target) & current_illuminance(Current
 /* Initial beliefs */
 
 // The agent believes that the target illuminance is 400 lux
-target_illuminance(350).
+target_illuminance(400).
 
 /* Initial goals */
 
@@ -34,6 +35,12 @@ target_illuminance(350).
     !manage_illuminance; // creates the goal !manage_illuminance
     // !manage_blinds;
     !start.
+
+
+// task1.1: 1
+@maintain_illuminance
++!manage_illuminance:  maintain_illuminance <-
+    .print("Maintaining the illuminance").
 
 // task1.1: 2
 @raise_blinds_with_lights_plan
@@ -90,11 +97,6 @@ target_illuminance(350).
 +!manage_illuminance:  blinds("raised") & requires_darkening <-
     .print("Lowering the blinds");
     lowerBlinds. // performs the action of lowering the blinds
-
-// task1.1: 1
-@maintain_illuminance
-+!manage_illuminance:  maintain_illuminance <-
-    .print("Maintaining the illuminance").
 
 // task1.1:3
 // Write a plan that enables the agent to react to the deletion of the belief weather("sunny") 
