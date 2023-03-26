@@ -2,6 +2,7 @@
 
 /* Task 2 Start of your solution */
 
+
 best_option(vibrations) :- ranking_light(Rlight) & ranking_blinds(Rblinds) & ranking_vibrations(Rvibrations) & Rvibrations < Rlight & Rvibrations < Rblinds.
 best_option(blinds) :- ranking_light(Rlight) & ranking_blinds(Rblinds) & ranking_vibrations(Rvibrations) & Rblinds < Rlight & Rblinds < Rvibrations.
 best_option(light) :- ranking_light(Rlight) & ranking_blinds(Rblinds) & ranking_vibrations(Rvibrations) & Rlight < Rblinds & Rlight < Rvibrations.
@@ -29,14 +30,11 @@ ranking_vibrations(0).
     !manage_wakeup.
 
 @wakeup_preference_plan
-+!wakeup_preference : not best_option(blinds) & mattress("vibrating") & blinds("lowered")<- 
-    // .print("Raising the blinds");
++!wakeup_preference : best_option(blinds) | (mattress("vibrating") & blinds("lowered")) <- 
     raiseBlinds.
 +!wakeup_preference : best_option(vibrations) & mattress("idle") <- 
-    // .print("Vibrating the mattress");
     setVibrationsMode.
 +!wakeup_preference : mattress("vibrating") & blinds("raised") <- 
-    // .print("Turning on the lights");
     turnOnLights.
 
 // the state of the user as monitored by the user’s wristband; 
