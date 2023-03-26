@@ -20,7 +20,9 @@ public class WeatherStation extends Artifact {
             prop.updateValue("cloudy");
             
             try {
+                // search for the blinds artifact
                 ArtifactId blindsId = lookupArtifact("blinds");
+                // execute the operation winterIsComingWithBlinds
                 execLinkedOp(blindsId,"winterIsComingWithBlinds");
             } catch (OperationException e) {
                 e.printStackTrace();

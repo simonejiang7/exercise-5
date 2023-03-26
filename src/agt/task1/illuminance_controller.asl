@@ -8,6 +8,9 @@ requires_brightening :- target_illuminance(Target) & current_illuminance(Current
 // Inference rule for infering the belief requires_darkening if the target illuminance is lower than the current illuminance
 requires_darkening :- target_illuminance(Target) & current_illuminance(Current) & Target < Current.
 
+// task1.1:1
+maintain_illuminance :- target_illuminance(Target) & current_illuminance(Current) & Target = Current.
+
 /* Initial beliefs */
 
 // The agent believes that the target illuminance is 400 lux
@@ -29,7 +32,20 @@ target_illuminance(400).
     .print("Continuously managing illuminance");
     .wait(4000);
     !manage_illuminance; // creates the goal !manage_illuminance
+    // !manage_blinds;
     !start.
+
+// task1.1: 2
+@raise_blinds_with_lights_plan
++!manage_illuminance:  weather("sunny") & blinds("lowered") & requires_brightening <-
+    .print("Raising the blinds when it is sunny");
+    raiseBlinds.
+
+// // task1.1: 3
+// @lower_blinds_with_weather_plan
+// +!manage_illuminance:  (-weather("sunny")) & blinds("raised") <-
+//     .print("Lowering the blinds when it is cloudy");
+//     lowerBlinds.
 
 /* 
  * Plan for reacting to the addition of the goal !manage_illuminance
@@ -75,6 +91,27 @@ target_illuminance(400).
     .print("Lowering the blinds");
     lowerBlinds. // performs the action of lowering the blinds
 
+// task1.1: 1
+@maintain_illuminance
++!manage_illuminance:  maintain_illuminance <-
+    .print("Maintaining the illuminance").
+
+// task1.1:3
+// Write a plan that enables the agent to react to the deletion of the belief weather("sunny") 
+// by lowering the blinds if the blinds are currently raised.
+// @lower_blinds_with_weather_plan
+// +!manage_blinds:  weather("cloudy") & blinds("raised") <-
+//     .print("Lowering the blinds when it is cloudy");
+//     lowerBlinds.
+    
+// @lower_blinds_with_weather_plan
+// +!manage_blinds:  weather("sunny") & blinds("raised") <-
+//     .print("Keep the blind as it is");
+//     raiseBlinds.
+
+// @lower_blinds_with_weather_plan
+// +!manage_blinds:  weather("cloudy") <-
+//     .print("Keep the blind as it is").
 /* 
  * Plan for reacting to the addition of the belief current_illuminance(Current)
  * Triggering event: addition of belief current_illuminance(Current)

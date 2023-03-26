@@ -11,7 +11,7 @@ public class IlluminanceSensor extends Artifact {
         defineObsProperty("current_illuminance", 0);
     }
 
-    @LINK
+    @LINK // it can be invoked by agents.
     public void increase(int increment) {
         ObsProperty prop = getObsProperty("current_illuminance");
 
