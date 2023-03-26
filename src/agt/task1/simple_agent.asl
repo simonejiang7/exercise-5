@@ -97,18 +97,18 @@ odd(X) :- X mod 2 == 1.
 */
 @start_list_generation_1_2_4_plan
 +!start_list_generation(Start, End) : true <-
-//    !compute_list(Start, End, [], List);
-//    .print("List with integers from ", Start, " to ", End, ": ", List).
-   !compute_list(Start, End, []);
+   !compute_list(Start, End, [], List);
    .print("List with integers from ", Start, " to ", End, ": ", List).
 
 /* Task 1.2.4 Start of your solution */
 @compute_list_1_2_4_plan
-+!compute_list(Start, End, StartList): Start < End <- 
-    List = [Start|StartList];
-    .print("List: ", List);
++!compute_list(Start, End, StartList, ResultList) : Start > End <- 
+    ResultList = StartList.
++!compute_list(Start, End, StartList, ResultList) : Start <= End <- 
+    NextList = [Start|StartList];
+    // .print("List: ", NextList);
     NextStart = Start + 1;
-    !compute_list(NextStart, End, List).
+    !compute_list(NextStart, End, NextList, ResultList).
 
 // You are allowed to use a triggering event other than the one provided 
 /* Task 1.2.4 End of your solution */
