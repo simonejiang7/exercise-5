@@ -3,57 +3,41 @@
 /* Task 2 Start of your solution */
 
 best_option(vibrations) :- ranking_light(Rlight) & ranking_blinds(Rblinds) & ranking_vibrations(Rvibrations) & Rvibrations < Rlight & Rvibrations < Rblinds.
-
-// ranking_option(vibrations) > ranking_option(blinds) & ranking_option(vibrations) > ranking_option(light).
+best_option(blinds) :- ranking_light(Rlight) & ranking_blinds(Rblinds) & ranking_vibrations(Rvibrations) & Rblinds < Rlight & Rblinds < Rvibrations.
+best_option(light) :- ranking_light(Rlight) & ranking_blinds(Rblinds) & ranking_vibrations(Rvibrations) & Rlight < Rblinds & Rlight < Rvibrations.
 
 ranking_light(2).
 ranking_blinds(1).
 ranking_vibrations(0).
-
 
 !start.
 
 @start_plan
 +!start : true <- 
     .print("Starting the plan");
-    .wait(3000);
-    !manage_wakeup;
-    
-    !start.
+    .wait(2000);
+    !manage_wakeup.
+    // !start.
 
 @manage_wakeup_plan
 +!manage_wakeup : upcoming_event("now") &  owner_state("awake")<- 
     .print("Enjoy your event").
 
-// task 2.1
 +!manage_wakeup : upcoming_event("now") &  owner_state("asleep")<- 
     .print("Starting wake-up routine");
-    !wakeup_preference.
-    // turnOnLights;
-    // raiseBlinds;
-    // setVibrationsMode.
+    !wakeup_preference;
+    !manage_wakeup.
 
 @wakeup_preference_plan
-+!wakeup_preference : best_option(vibrations) <- 
-    setVibrationsMode.
-+!wakeup_preference : best_option(blinds) <- 
++!wakeup_preference : not best_option(blinds) & mattress("vibrating") & blinds("lowered")<- 
+    // .print("Raising the blinds");
     raiseBlinds.
-+!wakeup_preference : best_option(light) <- 
++!wakeup_preference : best_option(vibrations) & mattress("idle") <- 
+    // .print("Vibrating the mattress");
+    setVibrationsMode.
++!wakeup_preference : mattress("vibrating") & blinds("raised") <- 
+    // .print("Turning on the lights");
     turnOnLights.
-
-// +!manage_wakeup : upcoming_event("now") &  owner_state("asleep")<- 
-//     .print("Starting wake-up routine");
-//     raiseBlinds.
-
-// +!manage_wakeup : upcoming_event("now") &  owner_state("asleep")<- 
-//     .print("Starting wake-up routine");
-//     setVibrationsMode.
-
-// @ranking_blinds_plan
-// +ranking_option(b) : blinds <-
-//     .print("The user ranks waking up with artificial light with ", 2).
-
-
 
 // the state of the user as monitored by the user’s wristband; 
 // e.g., the state of the user being awake or asleep can be represented as: owner_state("awake"), owner_state("asleep");
