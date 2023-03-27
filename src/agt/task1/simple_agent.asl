@@ -7,15 +7,15 @@ odd(X) :- X mod 2 == 1.
 /* Task 1.2.3 End of your solution */
 
 /* Initial goals */
-// !start_sum(4,2). // uncomment for Task 1.2.1
-// !start_sum(4,-2). // uncomment for Task 1.2.1
-// !start_division(4,2). // uncomment for Task 1.2.2
-// !start_division(4,2.5). // uncomment for Task 1.2.2
-// !start_division(4,0). // uncomment for Task 1.2.2
-// !start_even_or_odd(4). // uncomment for Task 1.2.3
-// !start_even_or_odd(5). // uncomment for Task 1.2.3
-// !start_list_generation(0,4). // uncomment for Task 1.2.4
-// !print_list([0,1,2,3,4]). // uncomment for an example of handling a list with recursion
+!start_sum(4,2). // uncomment for Task 1.2.1
+!start_sum(4,-2). // uncomment for Task 1.2.1
+!start_division(4,2). // uncomment for Task 1.2.2
+!start_division(4,2.5). // uncomment for Task 1.2.2
+!start_division(4,0). // uncomment for Task 1.2.2
+!start_even_or_odd(4). // uncomment for Task 1.2.3
+!start_even_or_odd(5). // uncomment for Task 1.2.3
+!start_list_generation(0,4). // uncomment for Task 1.2.4
+!print_list([0,1,2,3,4]). // uncomment for an example of handling a list with recursion
 
 /* 
  * Plan for reacting to the addition of the goal !start_sum
